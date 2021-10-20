@@ -1,0 +1,15 @@
+canvas {
+	margin: 1px auto;
+	outline:none;
+	display:block;
+}
+
+body {
+	background-color:rgb(240,220,190);
+	color:rgb(3,180,250);
+	color:rgb(100,70,30);
+}
+
+a {
+	color:rgb(100,70,30);
+}

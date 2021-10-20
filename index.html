@@ -1,0 +1,184 @@
+<html> 
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.6">
+	<script src="processing.js"></script>
+	<link href="style.css" rel="stylesheet" type="text/css">
+	<meta content = "https://massivefile.com">
+</head>
+<body>
+
+	<div style="padding:15px 15px;color:black;opacity:1;background-color:orange;font-size:23px">
+       <center> <small>massivefile.com</small> - GAN</center>
+      </div>
+	<div style="width:911px;margin:21px auto 0px;text-align:center;font-size: 16px;">
+		This is an portrayal of a Generative Adversarial Network (GAN) where the dog is the generator and the duck is the destructor.
+		<br>
+		The Duck (Destructor) is trying to catch the Dog (Constructor) but our Constructor A.K.A the dog is very smart & he manages to fool the duck easily at all times.
+	</div>
+
+	<script type="text/processing" data-processing-target="target">
+
+		float duckx;
+		float ducky;
+		float duckdir = 0.8;
+		float duckdiraccel = 0;
+		float duckvel = 1;
+
+		float dogx;
+		float dogy;
+		float dogdir = 0;
+		float dogvel = 1;
+
+		float dogtheta = 0;
+
+		float destination = 0;
+		float destinationaccel = 0;
+
+		float pondsize = 400;
+
+		void setup() {
+		  size(500,500);
+		  noStroke();
+		  
+		  duckx = width/2;
+		  ducky = height/2;
+		  
+		  destination = random(TWO_PI);
+		  
+		}
+
+
+		void draw() {
+		  
+		  noStroke();
+		  //landscape
+		  background(240,220,190);
+		  fill(3,180,250);
+		  ellipse(width/2,height/2,pondsize,pondsize);
+		  
+		  // destination
+		  
+		  //x = r * cos(theta)
+		  //y = r * sin(theta)
+		  float destinationx = pondsize/2.3 * cos(destination) + width/2;
+		  float destinationy = pondsize/2.3 * sin(destination) + height/2;
+		  
+		  fill(0);
+		  //ellipse(destinationx,destinationy,15,15);
+		  
+		  
+		  //duck to destination polars
+		  //theta
+		  duckdir = atan2(destinationy-ducky,destinationx-duckx);
+		  //r
+		  float ducktodest = sqrt((destinationx-duckx)*(destinationx-duckx) + (destinationy-ducky)*(destinationy-ducky));
+		  
+		  float randomness = pow((400-ducktodest)/400,4)/30;
+		  destinationaccel += (random(randomness) - randomness/2);
+		  destination += destinationaccel;
+		  
+		  if (ducktodest > 200) {
+		     destinationaccel /= 1.03; // 1.03 
+		  }
+		  
+		  if (destinationaccel > 0.05 || destinationaccel < -0.05) {
+		      destinationaccel = 0;
+		  }
+		  
+		  
+		  duckx += cos(duckdir)/1;
+		  ducky += sin(duckdir)/1;
+		  
+		  
+		  //duck
+		  pushMatrix();
+		  translate(duckx,ducky);
+		  rotate(duckdir);
+		  fill(250,250,0);
+		  ellipse(0,0,25,15);
+		  
+		  fill(240,170,0);
+		  ellipse(12,0,10,7);
+		  
+		  popMatrix();
+		  
+		  
+		  
+		  //dog
+		  
+		  if (destination > dogtheta+0.05) {
+		    dogtheta += 0.015;
+		  } else if (destination < dogtheta-0.05) {
+		    dogtheta -= 0.015;
+		  }
+		  
+		  if (destination - dogtheta > PI) {
+		     dogtheta += TWO_PI; 
+		  } else if (dogtheta - destination > PI) {
+		     dogtheta -= TWO_PI; 
+		  } else 
+		  
+		  dogx = 220 * cos(dogtheta) + width/2;
+		  dogy = 220 * sin(dogtheta) + height/2;
+
+		  
+		  //fill(150,130,110);
+		  //ellipse(dogx,dogy,25,25);
+		  
+		  
+		  pushMatrix();
+		  translate(dogx,dogy);
+		  rotate(dogtheta+PI/2);
+		  
+		  
+		  fill(100,70,30);
+		  ellipse(-10,5,15,27);
+		  
+		  fill(100,70,30);
+		  ellipse(10,5,15,27);
+		  
+		  
+		  
+		  fill(150,130,110);
+		  ellipse(0,0,25,25);
+		  
+		  
+		  fill(240,210,180);
+		  ellipse(0,5,15,10);
+		  
+		  fill(255);
+		  ellipse(-5,-2,7,13); // 5 10
+		  fill(255);
+		  ellipse(5,-2,7,13);
+		  
+		  fill(0);
+		  ellipse(-5,0,5,5); // 4 4
+		  fill(0);
+		  ellipse(5,0,5,5);
+		  
+		  
+		  /*fill(0);
+		  ellipse(0,10,7,14); 
+		  fill(240,180,190);
+		  ellipse(0,4,7,7); */
+		  fill(0);
+		  ellipse(0,5,5,5);
+		  
+		  
+		  popMatrix();
+		  
+		  
+		  
+		  // show path
+		  
+		  stroke(255);
+		  //line(duckx,ducky,destinationx,destinationy);
+		  
+		}
+
+	</script>
+
+	<canvas id="target"></canvas>
+
+</body>
+</html>
