@@ -5,5 +5,5 @@ The Duck (Destructor) is trying to catch the Dog (Constructor) but our Construct
 # massivefile.com/gan - click to see the running model
 
 # preview - 
-![massivefile.com/gan](https://github.com/karan36k/gan/blob/main/img-22.png?raw=true)
+![massivefile.com/gan](https://github.com/karan36k/gan/blob/main/img-22.PNG?raw=true)
 
